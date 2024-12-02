@@ -35,7 +35,7 @@ func pt2(list1Sorted []int, list2Sorted []int) {
 	fmt.Print(simmilarity)
 }
 
-func main() {
+func day1() {
 	list1 := []int{}
 	list2 := []int{}
 
