@@ -5,14 +5,11 @@ import (
 	"strconv"
 )
 
-func isSafe(report []string) bool {
+func isSafe(report []int) bool {
 	direction := true // true == ascending
 	for i := range len(report) - 1 {
-		cur, e := strconv.Atoi(report[i])
-		next, e2 := strconv.Atoi(report[i+1])
-
-		panicIfError(e)
-		panicIfError(e2)
+		cur := report[i]
+		next := report[i+1]
 
 		if i == 0 {
 			direction = cur < next
@@ -28,7 +25,7 @@ func isSafe(report []string) bool {
 	return true
 }
 
-func part1(reports [][]string) {
+func part1(reports [][]int) {
 	safeCount := 0
 	for _, report := range reports {
 		if isSafe(report) {
@@ -39,14 +36,14 @@ func part1(reports [][]string) {
 
 }
 
-func part2(reports [][]string) {
+func part2(reports [][]int) {
 	safeCount := 0
 	for _, report := range reports {
 		safe := isSafe(report)
 
 		if !safe {
 			for i := range len(report) {
-				newReport := make([]string, len(report))
+				newReport := make([]int, len(report))
 				copy(newReport, report[:i])
 				copy(newReport[i:], report[i+1:])
 				newReport = newReport[:len(newReport)-1]
@@ -64,7 +61,13 @@ func part2(reports [][]string) {
 }
 func day2() {
 
-	reports := fileToMatrix("day2.txt")
+	reports := fileToMatrix("day2.txt",
+		func(s string) int {
+			i, e := strconv.Atoi(s)
+			panicIfError(e)
+			return i
+		})
+
 	part2(reports)
 
 }

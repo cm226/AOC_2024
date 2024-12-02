@@ -6,7 +6,11 @@ import (
 	"strings"
 )
 
-func fileToMatrix(fileName string) [][]string {
+func noOpConverter(s string) string {
+	return s
+}
+
+func fileToMatrix[T any](fileName string, converter func(string) T) [][]T {
 
 	inputFile, error := os.Open(fileName)
 
@@ -15,16 +19,17 @@ func fileToMatrix(fileName string) [][]string {
 	}
 
 	scanner := bufio.NewScanner(inputFile)
-	matrix := [][]string{}
+	matrix := [][]T{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		parts := []string{}
+		parts := []T{}
 
 		for _, part := range strings.Split(line, " ") {
 			part = strings.TrimSpace(part)
+			convertedPart := converter(part)
 			if part != "" {
-				parts = append(parts, part)
+				parts = append(parts, convertedPart)
 			}
 		}
 		matrix = append(matrix, parts)
