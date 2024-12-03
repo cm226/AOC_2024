@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"bufio"
@@ -6,11 +6,28 @@ import (
 	"strings"
 )
 
-func noOpConverter(s string) string {
+func NoOpConverter(s string) string {
 	return s
 }
 
-func fileToMatrix[T any](fileName string, converter func(string) T) [][]T {
+func FileToSlice(fileName string) []string {
+	inputFile, error := os.Open(fileName)
+
+	if error != nil {
+		panic(error)
+	}
+
+	scanner := bufio.NewScanner(inputFile)
+	chars := []string{}
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		chars = append(chars, strings.Split(line, "")...)
+	}
+	return chars
+}
+
+func FileToMatrix[T any](fileName string, converter func(string) T) [][]T {
 
 	inputFile, error := os.Open(fileName)
 
@@ -38,7 +55,7 @@ func fileToMatrix[T any](fileName string, converter func(string) T) [][]T {
 
 }
 
-func abs(first int, second int) int {
+func Abs(first int, second int) int {
 	dif := first - second
 	if dif < 0 {
 		dif *= -1
@@ -46,7 +63,7 @@ func abs(first int, second int) int {
 	return dif
 }
 
-func panicIfError(e error) {
+func PanicIfError(e error) {
 	if e != nil {
 		panic(e)
 	}
