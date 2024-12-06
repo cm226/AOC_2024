@@ -1,6 +1,7 @@
 package main
 
 import (
+	util "aox_2024/src/utils"
 	"fmt"
 	"strconv"
 )
@@ -16,7 +17,7 @@ func isSafe(report []int) bool {
 		}
 
 		directionCheck := (cur < next) == direction
-		absDif := abs(cur, next)
+		absDif := util.Abs(cur, next)
 
 		if !(directionCheck && absDif >= 1 && absDif <= 3) {
 			return false
@@ -61,10 +62,10 @@ func part2(reports [][]int) {
 }
 func day2() {
 
-	reports := fileToMatrix("day2.txt",
+	reports := util.FileToMatrix("day2.txt", " ",
 		func(s string) int {
 			i, e := strconv.Atoi(s)
-			panicIfError(e)
+			util.PanicIfError(e)
 			return i
 		})
 

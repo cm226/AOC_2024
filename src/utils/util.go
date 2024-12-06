@@ -27,7 +27,7 @@ func FileToSlice(fileName string) []string {
 	return chars
 }
 
-func FileToMatrix[T any](fileName string, converter func(string) T) [][]T {
+func FileToMatrix[T any](fileName string, sep string, converter func(string) T) [][]T {
 
 	inputFile, error := os.Open(fileName)
 
@@ -42,7 +42,7 @@ func FileToMatrix[T any](fileName string, converter func(string) T) [][]T {
 		line := scanner.Text()
 		parts := []T{}
 
-		for _, part := range strings.Split(line, " ") {
+		for _, part := range strings.Split(line, sep) {
 			part = strings.TrimSpace(part)
 			convertedPart := converter(part)
 			if part != "" {
