@@ -72,10 +72,15 @@ func checkPasses(eq eq, ops []ops) bool {
 		case Mult:
 			total = total * eq.nums[i+1]
 		case Concat:
-			numStr := strconv.FormatInt(int64(total), 10) + strconv.FormatInt(int64(eq.nums[i+1]), 10)
-			total2, e := strconv.Atoi(numStr)
-			util.PanicIfError(e)
-			total = total2
+			nextNum := eq.nums[i+1]
+			for nextNum > 0 {
+				total *= 10
+				nextNum /= 10
+			}
+			total += eq.nums[i+1]
+		}
+		if total > eq.result {
+			return false
 		}
 	}
 
@@ -90,7 +95,6 @@ func genPerms(eq eq) []ops {
 
 		// convert count to ops
 		count_copy := count
-		opArr = make([]ops, len(eq.nums)-1)
 		skip := false
 		for j := range len(opArr) {
 			if count_copy&1 != 0 {
