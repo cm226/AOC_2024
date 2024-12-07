@@ -2,9 +2,15 @@ package util
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 )
+
+type Point struct {
+	X int
+	Y int
+}
 
 func NoOpConverter(s string) string {
 	return s
@@ -53,6 +59,12 @@ func FileToMatrix[T any](fileName string, sep string, converter func(string) T) 
 	}
 	return matrix
 
+}
+
+func PrintMatrix[T any](matrix [][]T) {
+	for i := range len(matrix) {
+		fmt.Println(matrix[i])
+	}
 }
 
 func Abs(first int, second int) int {
