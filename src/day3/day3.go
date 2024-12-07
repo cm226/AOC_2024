@@ -1,4 +1,4 @@
-package main
+package day3
 
 import (
 	util "aox_2024/src/utils"
@@ -90,7 +90,7 @@ func day3_part1_and_part_2(input []string) {
 
 }
 
-func day3() {
+func Day3() {
 
 	file := util.FileToSlice("input.txt")
 	fmt.Println(file)

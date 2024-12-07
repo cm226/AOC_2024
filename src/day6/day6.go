@@ -1,4 +1,4 @@
-package main
+package day6
 
 import (
 	util "aox_2024/src/utils"
@@ -238,7 +238,7 @@ func day6Part2(origboard [][]string, locations []util.Point) int {
 	return loopCount
 }
 
-func day6() {
+func Day6() {
 	origboard := util.FileToMatrix("input.txt", "", util.NoOpConverter)
 	board := make([][]string, len(origboard))
 	for i := range board {

@@ -1,4 +1,4 @@
-package main
+package day2
 
 import (
 	util "aox_2024/src/utils"
@@ -60,7 +60,7 @@ func part2(reports [][]int) {
 	fmt.Println(safeCount)
 
 }
-func day2() {
+func Day2() {
 
 	reports := util.FileToMatrix("day2.txt", " ",
 		func(s string) int {

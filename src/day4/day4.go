@@ -1,4 +1,4 @@
-package main
+package day4
 
 import (
 	util "aox_2024/src/utils"
@@ -122,7 +122,7 @@ func day4Part2(puzzle [][]string) {
 
 }
 
-func day4() {
+func Day4() {
 	puzzle := util.FileToMatrix("input.txt", "", util.NoOpConverter)
 	day4Part1(puzzle)
 	day4Part2(puzzle)

@@ -1,4 +1,4 @@
-package main
+package day1
 
 import (
 	"bufio"
@@ -35,7 +35,7 @@ func pt2(list1Sorted []int, list2Sorted []int) {
 	fmt.Print(simmilarity)
 }
 
-func day1() {
+func Day1() {
 	list1 := []int{}
 	list2 := []int{}
 

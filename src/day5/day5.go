@@ -1,4 +1,4 @@
-package main
+package day5
 
 import (
 	util "aox_2024/src/utils"
@@ -134,7 +134,7 @@ func day5_part2(rules []rule, pages [][]int) {
 	fmt.Println(correctlyOrderedSum)
 }
 
-func day5() {
+func Day5() {
 	rules, pages := parseInput("input.txt")
 	day5_part2(rules, pages)
 }
