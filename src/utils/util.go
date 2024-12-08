@@ -12,6 +12,24 @@ type Point struct {
 	Y int
 }
 
+func (p Point) Add(p2 Point) Point {
+	return Point{
+		X: p.X + p2.X,
+		Y: p.Y + p2.Y,
+	}
+}
+
+func (p Point) Sub(p2 Point) Point {
+	return Point{
+		X: p.X - p2.X,
+		Y: p.Y - p2.Y,
+	}
+}
+
+func (p Point) Inside(max Point) bool {
+	return p.X < max.X && p.Y < max.Y && p.X >= 0 && p.Y >= 0
+}
+
 func NoOpConverter(s string) string {
 	return s
 }
