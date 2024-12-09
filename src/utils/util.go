@@ -34,7 +34,7 @@ func NoOpConverter(s string) string {
 	return s
 }
 
-func FileToSlice(fileName string) []string {
+func FileToSlice[T any](fileName string, converter func(string) T) []T {
 	inputFile, error := os.Open(fileName)
 
 	if error != nil {
@@ -48,7 +48,12 @@ func FileToSlice(fileName string) []string {
 		line := scanner.Text()
 		chars = append(chars, strings.Split(line, "")...)
 	}
-	return chars
+
+	ret := make([]T, len(chars))
+	for i, c := range chars {
+		ret[i] = converter(c)
+	}
+	return ret
 }
 
 func FileToMatrix[T any](fileName string, sep string, converter func(string) T) [][]T {
