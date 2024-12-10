@@ -30,6 +30,10 @@ func (p Point) Inside(max Point) bool {
 	return p.X < max.X && p.Y < max.Y && p.X >= 0 && p.Y >= 0
 }
 
+func IndexPoint[T any](matrix *[][]T, point Point) T {
+	return (*matrix)[point.Y][point.X]
+}
+
 func NoOpConverter(s string) string {
 	return s
 }
