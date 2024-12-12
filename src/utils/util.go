@@ -38,7 +38,7 @@ func NoOpConverter(s string) string {
 	return s
 }
 
-func FileToSlice[T any](fileName string, converter func(string) T) []T {
+func FileToSlice[T any](fileName string, sep string, converter func(string) T) []T {
 	inputFile, error := os.Open(fileName)
 
 	if error != nil {
@@ -50,7 +50,7 @@ func FileToSlice[T any](fileName string, converter func(string) T) []T {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		chars = append(chars, strings.Split(line, "")...)
+		chars = append(chars, strings.Split(line, sep)...)
 	}
 
 	ret := make([]T, len(chars))
