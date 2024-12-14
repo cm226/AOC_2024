@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aox_2024/src/day11"
+	"aox_2024/src/day12"
 	"flag"
 	"log"
 	"os"
@@ -37,7 +37,8 @@ func main() {
 	//day8.Day8()
 	//day9.Day9()
 	//day10.Day10()
-	day11.Day11()
+	//day11.Day11()
+	day12.Day12()
 
 	if *memprofile != "" {
 		f, err := os.Create(*memprofile)
