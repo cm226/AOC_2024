@@ -3,6 +3,7 @@ package day13
 import (
 	util "aox_2024/src/utils"
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -34,11 +35,15 @@ func parseBlock(lines []string) block {
 		return util.Point{X: x, Y: y}
 	}
 
-	return block{
+	b := block{
 		A:     parseLine(lines[0]),
 		B:     parseLine(lines[1]),
 		point: parseLine(lines[2]),
 	}
+
+	b.point.X += 10000000000000
+	b.point.Y += 10000000000000
+	return b
 }
 
 func parseInput(filename string) []block {
@@ -67,36 +72,28 @@ func parseInput(filename string) []block {
 	return blocks
 }
 
-func findFactors(block block) int {
+func solve(b block) (int, int) {
+	// solve with liner algebra
 
-	position := util.Point{}
-	mincost := MaxInt
-	//	a := 0
-	//	for (a*block.A.X < block.point.X) && (a*block.A.Y < block.point.Y) {
-	for a := range 102 {
-		if a == 101 {
-			if mincost == MaxInt {
-				mincost = 0
-			}
-			continue
-		}
-		//b := 0
-		//for (b*block.B.X < block.point.X) && (b*block.B.Y < block.point.Y) {
-		for b := range 101 {
+	a1 := (b.point.Y * b.A.X) - (b.A.Y * b.point.X)
+	a2 := -(b.A.Y * b.B.X) + (b.B.Y * b.A.X)
 
-			position.X = a * block.A.X
-			position.X += b * block.B.X
-
-			position.Y = a * block.A.Y
-			position.Y += b * block.B.Y
-
-			cost := (a * 3) + b
-			if position == block.point && cost < mincost {
-				mincost = cost
-			}
-		}
+	if a1%a2 != 0 {
+		// no solution
+		return 0, 0
 	}
-	return mincost
+
+	bCount := a1 / a2
+
+	aCount := (b.point.Y - (b.B.Y * bCount))
+	if aCount%b.A.Y != 0 {
+		// no solution
+		return 0, 0
+	}
+	aCount = aCount / b.A.Y
+
+	return aCount, bCount
+
 }
 
 func Day13() {
@@ -105,7 +102,9 @@ func Day13() {
 	mincost := 0
 
 	for _, block := range blocks {
-		mincost += findFactors(block)
+		aCount, bCount := solve(block)
+		mincost += aCount*3 + bCount
+		fmt.Println(aCount, bCount)
 	}
 
 	println(mincost)
