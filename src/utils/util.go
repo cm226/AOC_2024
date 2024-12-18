@@ -26,12 +26,39 @@ func (p Point) Sub(p2 Point) Point {
 	}
 }
 
+func PLeft() Point {
+	return Point{X: -1, Y: 0}
+}
+
+func PRight() Point {
+	return Point{X: 1, Y: 0}
+}
+
+func PUp() Point {
+	return Point{X: 0, Y: -1}
+}
+
+func PDown() Point {
+	return Point{X: 0, Y: 1}
+}
+
 func (p Point) Inside(max Point) bool {
 	return p.X < max.X && p.Y < max.Y && p.X >= 0 && p.Y >= 0
 }
 
 func IndexPoint[T any](matrix *[][]T, point Point) T {
 	return (*matrix)[point.Y][point.X]
+}
+
+func Find(matrix [][]string, item string) Point {
+	for i, line := range matrix {
+		for j, c := range line {
+			if c == item {
+				return Point{X: j, Y: i}
+			}
+		}
+	}
+	panic("Failed to find")
 }
 
 func NoOpConverter(s string) string {
@@ -60,19 +87,10 @@ func FileToSlice[T any](fileName string, sep string, converter func(string) T) [
 	return ret
 }
 
-func FileToMatrix[T any](fileName string, sep string, converter func(string) T) [][]T {
+func StringsToMatrix[T any](strs []string, sep string, converter func(string) T) [][]T {
 
-	inputFile, error := os.Open(fileName)
-
-	if error != nil {
-		panic(error)
-	}
-
-	scanner := bufio.NewScanner(inputFile)
 	matrix := [][]T{}
-
-	for scanner.Scan() {
-		line := scanner.Text()
+	for _, line := range strs {
 		parts := []T{}
 
 		for _, part := range strings.Split(line, sep) {
@@ -85,6 +103,22 @@ func FileToMatrix[T any](fileName string, sep string, converter func(string) T) 
 		matrix = append(matrix, parts)
 	}
 	return matrix
+}
+
+func FileToMatrix[T any](fileName string, sep string, converter func(string) T) [][]T {
+
+	inputFile, error := os.Open(fileName)
+
+	if error != nil {
+		panic(error)
+	}
+
+	scanner := bufio.NewScanner(inputFile)
+	lines := []string{}
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return StringsToMatrix(lines, sep, converter)
 
 }
 
